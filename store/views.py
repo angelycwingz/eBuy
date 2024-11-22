@@ -12,11 +12,9 @@ from .forms import SignUpForm
 def home(request):
 
     products = Product.objects.all()
-
     return render(request, 'home.html', {'products': products})
 
 def about(request):
-
     return render(request, 'about.html', {})
 
 def login_user(request):
@@ -65,6 +63,7 @@ def product(request, pk):
 def category(request, foo):
     # Replace Hyphens with Spaces
     foo = foo.replace('-', ' ')
+    print("***********")
     print(foo)
     # Grab the category from the url
     try:
@@ -75,3 +74,6 @@ def category(request, foo):
         messages.success(request, ("That Catergory doesn't exist.."))
         return redirect('home')
     
+def category_summary(request):
+    categories = Category.objects.all()
+    return render(request, 'category_summary.html', {'categories': categories})
