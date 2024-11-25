@@ -6,6 +6,7 @@ from django.contrib.auth.models import User
 from django.contrib.auth.forms import UserCreationForm
 from django import forms
 from .forms import SignUpForm, UpdateUserForm, ChangePasswordForm, UserInfoForm
+from django.db.models import Q
 
 
 # Create your views here.
@@ -134,3 +135,24 @@ def update_info(request):
         messages.success(request, "You must be logged in to access this page.")
         return redirect('home')
 
+def search(request):
+    # Determine if they filled out the form
+    if request.method == "POST":
+        searched = request.POST['searched']
+
+        # if user searches an empty search
+        if searched == "":
+            messages.success(request, "Please Type The Name Of Your Product.")
+            return redirect('search')
+
+        # Query The Products DB Model
+        searched = Product.objects.filter(Q(name__icontains=searched) | Q (description__icontains=searched))
+        # Test for null
+        if not searched:
+            messages.success(request, "That Product Does Not Exist. Please try again!")
+            return redirect('search')
+        else:
+            return render(request, "search.html", {'searched': searched})
+    
+    else:
+        return render(request, "search.html", {})
