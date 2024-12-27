@@ -31,7 +31,7 @@ SECRET_KEY = 'django-insecure-==px9dpq5esmt)su5w#(m(=1^io$+yo6ktder^_fgk#&s4ttr_
 DEBUG = True
 
 ALLOWED_HOSTS = ['ebuy-production.up.railway.app', 'https://ebuy-production.up.railway.app']
-CSRF_TRUSTED_ORIGINS = ['ebuy-production.up.railway.app', 'https://ebuy-production.up.railway.app']
+CSRF_TRUSTED_ORIGINS = ['https://ebuy-production.up.railway.app']
 
 
 # Application definition
