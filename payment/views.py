@@ -16,6 +16,19 @@ def payment_failed(request):
     return render(request, 'payment/payment_failed.html', {})
 
 def payment_success(request):
+    # Delete the browser cart
+    # First Get the cart
+    cart = Cart(request)
+    cart_products = cart.get_prods()
+    quantities = cart.get_quants()
+    totals = cart.cart_total()
+
+    # Delete our cart
+    for key in list(request.session.keys()):
+        if key == 'session_key':
+            # Delete the key
+            del request.session[key]
+
     return render(request, 'payment/payment_success.html', {})
 
 def checkout(request):
